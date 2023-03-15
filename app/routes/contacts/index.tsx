@@ -4,8 +4,9 @@ export default function Index() {
     return (
         <main style={{padding: '1rem'}}>
             <p>
-                App Dashboard! -
-                <Link to="/contacts">App Dashboard - gehe zu Kontakt Dashboard</Link>
+                Kontakte Dashboard! - -
+                <Link to="/contacts/edit/1234">Simuliere Kontaktsuche und -auswahl, gehe zu
+                    Bearbeitungs-Ansicht</Link>
             </p>
         </main>
     );
