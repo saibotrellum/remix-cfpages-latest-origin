@@ -9,3 +9,4 @@ wrangler.toml
 .env
 .dev.vars
 /.wrangler/
+.DS_Store
