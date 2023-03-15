@@ -1,7 +1,11 @@
 node_modules
 
+/.idea
 /.cache
 /functions/\[\[path\]\].js
 /functions/\[\[path\]\].js.map
 /public/build
+wrangler.toml
 .env
+.dev.vars
+/.wrangler/
