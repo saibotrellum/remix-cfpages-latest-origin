@@ -8,16 +8,6 @@ export type TTranslatedOptions = {
   val: string;
 };
 
-export type TSelects = {
-  salutations: TTranslatedOptions[];
-  titles: TTranslatedOptions[];
-  countries: TTranslatedOptions[];
-};
-export type TLoadedSettings = {
-  selects: TSelects;
-};
-export type TSettings = TLoadedSettings & { locale: string };
-
 export function getFakeContact(): TContact {
   return {
     _id: faker.datatype.uuid(),
@@ -84,16 +74,6 @@ export function mapTranslate(request: Request, data: TTranslatedOptions[]) {
   return data.map((cur) => {
     return { key: cur.key, val: cur.val };
   });
-}
-
-export function getSettings(request: Request): TLoadedSettings {
-  return {
-    selects: {
-      salutations: mapTranslate(request, fetchSalutations()),
-      titles: mapTranslate(request, fetchTitles()),
-      countries: mapTranslate(request, fetchCountries()),
-    },
-  };
 }
 
 export type TContact = {

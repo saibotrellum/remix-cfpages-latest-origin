@@ -59,6 +59,7 @@ export const de = {
   ZIP: "PLZ",
   or: "oder",
   other: "andere",
+  "ContactControl Event Management": "ContactControl Event Management",
 };
 export const en = {
   Actions: "Actions",
@@ -121,6 +122,7 @@ export const en = {
   ZIP: "ZIP",
   or: "or",
   other: "other",
+  "ContactControl Event Management": "ContactControl Event Management",
 };
 
 export default { de, en };

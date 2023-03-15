@@ -10,7 +10,7 @@ const contact = getFakeContact();
 export default function Main() {
   const [contactTypeState, setContactTypeState] =
     useState<TContactTypes>("organisation");
-
+  console.log("contacts/edit/1234");
   return (
     <>
       <div className="row justify-content-between mb-3">

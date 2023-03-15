@@ -1,4 +1,5 @@
 import {
+  Link,
   NavLink,
   Outlet,
   useMatches,
@@ -18,8 +19,6 @@ import {
 import { checkIdError, getSettings, t } from "~/utils";
 
 export default function Edit() {
-  const settings = getSettings(useMatches());
-
   const { contactId } = useParams();
   const navigate = useNavigate();
 
@@ -40,6 +39,9 @@ export default function Edit() {
     "border-start",
     "border-end",
   ];
+
+  console.log("$contactid");
+
   return (
     <>
       {errorModal}
@@ -47,27 +49,27 @@ export default function Edit() {
         <div className="col">
           <div className="row m-0 p-0">
             <div className="col-12 row my-2">
-              <div className="col-6 col-sm-4 col-md-2 my-2 text-center">
+              <div className="col-2">
                 <FAI icon={faFloppyDisk} color="#0c63e4" />
                 <div className="small">{t`Save`}</div>
               </div>
-              <div className="col-6 col-sm-4 col-md-2 my-2 text-center">
+              <div className="col-2">
                 <FAI icon={faAlignJustify} color="#ff9900" />
-                <div className="small">{t`Back to list`}</div>
+                <Link to={"./../.."} className="small">{t`Back to list`}</Link>
               </div>
-              <div className="col-6 col-sm-4 col-md-2 my-2 text-center">
+              <div className="col-2">
                 <FAI icon={faRotate} color="#6c757d" />
                 <div className="small">{t`Reload`}</div>
               </div>
-              <div className="col-6 col-sm-4 col-md-2 my-2 text-center">
+              <div className="col-2">
                 <FAI icon={faTrashCan} color="#ff0000" />
                 <div className="small">{t`Delete`}</div>
               </div>
-              <div className="col-6 col-sm-4 col-md-2 my-2 text-center">
+              <div className="col-2">
                 <FAI icon={faCopy} color="#6c757d" />
                 <div className="small">{t`Duplicate`}</div>
               </div>
-              <div className="col-6 col-sm-4 col-md-2 my-2 text-center">
+              <div className="col-2">
                 <FAI icon={faSquarePlus} className="text-success" />
                 <div className="small">{t`Add contact`}</div>
               </div>
@@ -125,3 +127,8 @@ export default function Edit() {
     </>
   );
 }
+
+// routes/parent.tsx
+export const handle = {
+  breadcrumb: () => <Link to="/contacts">Contacts</Link>,
+};

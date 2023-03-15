@@ -1,6 +1,11 @@
 import type { RouteMatch } from "@remix-run/react";
-import type { ReactNode } from "react";
-import React from "react";
+import type {
+  Dispatch,
+  PropsWithChildren,
+  ReactNode,
+  SetStateAction,
+} from "react";
+import React, { createContext, useState } from "react";
 import { Button, Modal as RBModal } from "react-bootstrap";
 import trans from "~/utils/trans";
 //import { t } from '@lingui/macro';
@@ -25,17 +30,13 @@ import trans from "~/utils/trans";
 
 export const isInteger = (num: any) => /^-?[0-9]+$/.test(`${num}`);
 export const IsNumeric = (num: any) => /^-{0,1}\d*\.{0,1}\d+$/.test(`${num}`);
+export const IsEmail = (email: string) =>
+  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-export function t(slug: any, lang = "de") {
+export function t(slug: string | TemplateStringsArray, lang = "de") {
   // @ts-ignore
-  return trans[lang][slug];
+  return trans[lang].hasOwnProperty(slug) ? trans[lang][slug] : slug;
 }
-
-type ComponentProps<T> = T extends
-  | React.ComponentType<infer P>
-  | React.Component<infer P>
-  ? JSX.LibraryManagedAttributes<T, P>
-  : never;
 
 type TModalProps = {
   title: string;
@@ -124,6 +125,21 @@ export function checkIdError({
     });
   }
   return null;
+}
+
+export function createCtx<A>(defaultValue: A) {
+  type UpdateType = Dispatch<SetStateAction<typeof defaultValue>>;
+  const defaultUpdate: UpdateType = () => defaultValue;
+  const ctx = createContext({
+    state: defaultValue,
+    update: defaultUpdate,
+  });
+
+  function Provider(props: PropsWithChildren<{}>) {
+    const [state, update] = useState(defaultValue);
+    return <ctx.Provider value={{ state, update }} {...props} />;
+  }
+  return [ctx, Provider] as const; // alternatively, [typeof ctx, typeof Provider]
 }
 
 export function getSettings(matches: RouteMatch[]) {

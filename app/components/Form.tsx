@@ -6,7 +6,7 @@ import classNames from "classnames";
 import is from "@sindresorhus/is";
 import type { InputProps, SelectProps } from "~/components/FormHelpers";
 import type { TTranslatedOptions } from "~/components/contacts/Helpers";
-import { TSelects } from "~/components/contacts/Helpers";
+import { TSelects } from "~/components/contexts/App";
 //import {Editor} from '@tinymce/tinymce-react';
 
 /*export const Form: React.FC<FormProps> = function ({

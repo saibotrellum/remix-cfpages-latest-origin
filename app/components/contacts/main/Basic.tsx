@@ -8,7 +8,7 @@ import { Input, Select } from "~/components/Form";
 import { t } from "~/utils";
 import Realm from "realm";
 
-import { App as RApp, Credentials } from "realm-web";
+//import { App as RApp, Credentials } from "realm";
 
 /*
 export function links() {
@@ -106,7 +106,7 @@ function contactTypeFields(contact: TContact, type: TContactTypes) {
 /*export const loader: LoaderFunction = async () => {
     return json({ok: true});
 };*/
-export default async function Basics(props: {
+export default function Basics(props: {
   contact: TContact;
   contactTypeState: TContactTypes;
   contactTypeSetter: React.Dispatch<React.SetStateAction<TContactTypes>>;
@@ -116,17 +116,21 @@ export default async function Basics(props: {
         handleSubmit,
       } = useForm<TContact>();s */
 
-  const credentials = Realm.Credentials.emailPassword(
-    "joe.jasper@example.com",
-    "passw0rd"
+  /*  const credentials = Realm.Credentials.emailPassword(
+    "webdepp@mein-ding.net",
+    "EziP3NaV!aL&Fb"
   );
   //new RApp(process.env.ATLAS_APP_ID as string);
-  const app = new RApp(process.env.ATLAS_APP_ID as string);
+  //const app = new RApp(process.env.ATLAS_APP_ID as string);
 
-  //const app = new Realm.App(process.env.ATLAS_APP_ID as string);
-
-  const authedUser = await app.logIn(credentials);
-  console.log(authedUser);
+  const app = new Realm.App(process.env.ATLAS_APP_ID as string);
+  console.log("start");
+  const authedUser = app.logIn(credentials).then((user) => {
+    console.log("login");
+    console.log(user);
+    return user;
+  });
+  console.log("end");*/
 
   return (
     <div className="card mb-3  shadow">

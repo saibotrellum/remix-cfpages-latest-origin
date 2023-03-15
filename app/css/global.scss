@@ -6,6 +6,7 @@
 $sidebarWidth: 15rem;
 $light-blue: #e7f1ff;
 
+
 .form-label-hv-responsive {
   @extend .col-form-label;
   @extend .col-form-label-sm;
@@ -50,6 +51,7 @@ $light-blue: #e7f1ff;
 
   &.sb-sidenav-toggled {
     margin-left: 0;
+
   }
 }
 

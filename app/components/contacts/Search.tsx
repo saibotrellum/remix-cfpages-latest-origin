@@ -1,6 +1,5 @@
-import { useForm } from "react-hook-form";
 import { Button, Form } from "react-bootstrap";
-import { t } from "@lingui/macro";
+import { useFormAction } from "@remix-run/react";
 
 type TContactSearch = {
   organisation: string;
@@ -9,7 +8,7 @@ type TContactSearch = {
 };
 
 export default function Search() {
-  const { register, handleSubmit } = useForm<TContactSearch>();
+  const { register, handleSubmit } = useFormAction<TContactSearch>();
   const onSubmit = (data: TContactSearch) => console.log(data);
 
   return (
