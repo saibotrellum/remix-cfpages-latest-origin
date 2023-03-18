@@ -1,2 +1,14 @@
 compatibility_date = "2022-04-05"
 compatibility_flags = ["streams_enable_constructors"]
+
+[vars]
+REALM_API_ID = "ccapi-edpbw"
+REALM_API_KEY = "Oo3csoPPN4ZteFJQ3S2I5rAfWwqrYaA9hryq5VlOV83xo1g2oJTAa0mNxgZC8lw6"
+MONGODB_API_ENDPOINT="https://eu-central-1.aws.data.mongodb-api.com/app/data-antbj/endpoint/data/v1"
+MONGODB_API_ID = "data-antbj"
+MONGODB_API_KEY = "B8AkfePxQ330Pfr8GOk1YAuE0ReR3tXJS8HxifHmVjinZRKFxnY0FyKWTNBuoTO9"
+MONGODB_DATA_SOURCE = "contactcontrol"
+MONGODB_DATABASE = "cloudflare"
+MONGODB_COLLECTION = "todos"
+SESSION_SECRET="ABC"
+ENVIRONMENT="development"

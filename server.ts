@@ -2,11 +2,7 @@ import { createPagesFunctionHandler } from "@remix-run/cloudflare-pages";
 import * as build from "@remix-run/dev/server-build";
 
 import type { AppLoadContext } from "@remix-run/cloudflare";
-
-type Env = {
-  ASSETS: Fetcher;
-  ENVIRONMENT: "development" | "production" | "preview";
-};
+import type { Env } from "~/lib/env";
 
 export type Context = EventContext<Env, string, unknown>;
 
