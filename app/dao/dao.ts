@@ -22,10 +22,11 @@ export function getDao({
 }: {
   collection: string;
   interpose?: (passThrough: any) => any;
-  overrides?: TMongoConnection;
+  overrides?: Partial<TMongoConnection>;
 }) {
   const db = mongo<TMongoDocument<string>>({
     collection,
+    // @ts-ignore
     overrides,
     fetch,
     interpose,

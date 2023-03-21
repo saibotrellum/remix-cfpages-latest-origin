@@ -10,3 +10,5 @@ wrangler.toml
 .dev.vars
 /.wrangler/
 .DS_Store
+package-lock.json
+wrangler.toml

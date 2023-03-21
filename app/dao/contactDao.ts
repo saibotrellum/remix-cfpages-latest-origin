@@ -1,12 +1,12 @@
 import { getDao } from "~/dao/dao";
 import env from "~/lib/env";
-const collection = "todos";
+const collection = "contacts";
 console.log("tdo", env.getData());
 
 //export const dao = getDao({ collection });
-const todoDao = () => {
-  const dao = getDao({ collection , overrides:{database:'cloudflare'}});
+const contactDao = () => {
+  const dao = getDao({ collection });
 
   return { ...dao };
 };
-export default todoDao;
+export default contactDao;

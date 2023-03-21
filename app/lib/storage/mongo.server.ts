@@ -222,7 +222,6 @@ export function mongo<T extends TMongoDocument>({
 }: TMongoDaoInitializer) {
   if (!collection || collection == "") throw "NO MONGODB COLLECTION DEFINED";
 
-  console.log("mongoenv", collection, DefaulMongoConnection);
 
   const connection = { ...DefaulMongoConnection, collection };
 
