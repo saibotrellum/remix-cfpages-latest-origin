@@ -7,13 +7,12 @@ import type { TContactTypes } from "~/lib/Helpers";
 import { getFakeContact } from "~/lib/Helpers";
 import { useParams } from "@remix-run/react";
 import { ValidatedForm } from "remix-validated-form";
-import { MySubmitButton } from "~/components/Form";
-import { Icon } from "~/utils";
-import { createPortal } from "react-dom";
 
 const contact = getFakeContact();
 
 export default function ContactMain() {
+  console.log("ContactEditMAIN in");
+
   const [_document, set_document] = React.useState<null | Document>(null);
   useEffect(() => {
     set_document(document);
@@ -28,14 +27,14 @@ export default function ContactMain() {
   const [contactTypeState, setContactTypeState] =
     useState<TContactTypes>("organisation");
 
-  return (
+  const ret = (
     <>
       <ValidatedForm
         id="moduleForm"
         validator={basicValidator}
         method="post"
-        action="testAction"
         subaction="testSubAction"
+        defaultValues={contact}
       >
         <div className="row justify-content-between mb-3">
           <div className="col-md-7">
@@ -58,10 +57,13 @@ export default function ContactMain() {
         </div>
         {contactTypeState === "organisation" && (
           <div className="row justify-content-start">
-            <ContactPerson />
+            <ContactPerson contact={contact} />
           </div>
         )}
       </ValidatedForm>
     </>
   );
+
+  console.log("ContactEditMAIN out");
+  return ret;
 }

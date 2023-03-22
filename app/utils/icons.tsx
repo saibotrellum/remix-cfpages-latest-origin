@@ -2,11 +2,14 @@ import classNames from "classnames";
 import {
   BsDatabaseFillAdd,
   GrDuplicate,
+  GrFacebook,
   ImBin2,
   IoPersonAdd,
   TfiReload,
   TiArrowBack,
   VscSaveAs,
+  BiLink,
+  GrInstagram,
 } from "react-icons/all";
 
 const iconMap = {
@@ -17,6 +20,9 @@ const iconMap = {
   duplicate: GrDuplicate,
   addContact: BsDatabaseFillAdd,
   addPerson: IoPersonAdd,
+  link: BiLink,
+  instagram: GrInstagram,
+  facebook: GrFacebook,
 };
 
 export function Icon({

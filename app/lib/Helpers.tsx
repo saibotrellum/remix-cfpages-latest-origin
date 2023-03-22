@@ -1,12 +1,4 @@
-//import remixI18n from "~/i18n.server";
 import { faker } from "@faker-js/faker/locale/de";
-
-export type TContactTypes = "organisation" | "person";
-
-export type TTranslatedOptions = {
-  key: number;
-  val: string;
-};
 
 export function getFakeContact(): TContact {
   return {
@@ -14,16 +6,23 @@ export function getFakeContact(): TContact {
     firstname: faker.name.firstName(),
     lastname: faker.name.lastName(),
     orgname: faker.company.name(),
-    title: "0",
-    salutation: "0",
+    title: "1",
+    salutation: "1",
     type: "organisation",
     address: faker.address.street() + " " + faker.address.buildingNumber(),
     address2: faker.address.buildingNumber(),
     zip: faker.address.zipCode(),
     city: faker.address.city(),
-    country: "Deutschland",
+    country: "1",
     internNote: "interne Adressnotiz",
     externNote: "externe Adressnotiz",
+    other: {
+      social: [{ label: "twitter", value: "@" + faker.random.word() }],
+      numbers: [{ label: "email2", value: faker.internet.email() }],
+    },
+    www: faker.internet.url(),
+    facebook: "profile.php?id=" + faker.random.numeric(),
+    instagram: "@" + faker.random.word(),
     contactPersons: [
       getFakeContactPerson(true),
       getFakeContactPerson(),
@@ -31,6 +30,7 @@ export function getFakeContact(): TContact {
     ],
   };
 }
+
 export function getFakeContactPerson(
   isPrimary: boolean = false
 ): TContactPerson {
@@ -38,35 +38,47 @@ export function getFakeContactPerson(
     _id: faker.datatype.uuid(),
     firstname: faker.name.firstName(),
     lastname: faker.name.lastName(),
+    title: "1",
+    salutation: "1",
+
     primary: isPrimary,
     phone: faker.phone.number(),
     mobile: faker.phone.number(),
     fax: faker.phone.number(),
     email: faker.internet.email(),
-    role: "Zuständigkeit",
-    birthdate: "Geburtsdatum",
+    www: faker.internet.url(),
+    facebook: "profile.php?id=" + faker.random.numeric(),
+    instagram: "@" + faker.random.word(),
+    other: {
+      social: [{ label: "twitter", value: "@" + faker.random.word() }],
+      numbers: [{ label: "email2", value: faker.internet.email() }],
+    },
+
+    role: "Marketing",
+    birthdate: "01.01.1970",
   };
 }
+
 export function fetchSalutations(): TTranslatedOptions[] {
   return [
-    { key: 1, val: "Mr." },
-    { key: 2, val: "Mrs." },
-    { key: 3, val: `Other` },
+    { key: 1, label: "Mr." },
+    { key: 2, label: "Mrs." },
+    { key: 3, label: `Other` },
   ];
 }
 
 export const fetchTitles = function (): TTranslatedOptions[] {
   return [
-    { key: 1, val: "Dr." },
-    { key: 2, val: "Prof." },
-    { key: 3, val: `Other` },
+    { key: 1, label: "Dr." },
+    { key: 2, label: "Prof." },
+    { key: 3, label: `Other` },
   ];
 };
 
 export const fetchCountries = function (): TTranslatedOptions[] {
   return [
-    { key: 1, val: "Deutschland" },
-    { key: 2, val: "Vereinigte Staaten" },
+    { key: 1, label: "Deutschland" },
+    { key: 2, label: "Vereinigte Staaten" },
   ];
 };
 
@@ -74,12 +86,31 @@ export function mapTranslate(request: Request, data: TTranslatedOptions[]) {
   // const locale = await remixI18n.getLocale(request);
   // const t = await remixI18n.getFixedT(request, "common");
   return data.map((cur) => {
-    return { key: cur.key, val: cur.val };
+    return { key: cur.key, label: cur.label };
   });
 }
 
-export type TContact = {
-  _id: string;
+export type TContactEditModules = "main" | "media" | "objects" | "events";
+
+export type TContactTypes = "organisation" | "person";
+
+export type TTranslatedOptions = {
+  key: number;
+  label: string;
+};
+export type TContactOtherFields = { [k in TContactInfoGroups]?: TLabelValue[] };
+export type TContactInfoGroups = "numbers" | "social" | "categories";
+export type TLabelValue = { label: string; value: string };
+
+export type TSocialFields = {
+  www: string;
+  facebook: string;
+  instagram: string;
+  other: TContactOtherFields;
+};
+
+export type TContact = TSocialFields & {
+  _id?: string;
   type: TContactTypes;
   orgname: string;
   title: string;
@@ -95,18 +126,26 @@ export type TContact = {
   externNote: string;
   contactPersons: TContactPerson[];
 };
-
-export type TContactPerson = {
-  _id: string;
-  primary: boolean;
+type TPersonInfo = {
+  title: number | string;
+  salutation: number | string;
   firstname: string;
   lastname: string;
+};
+export type TContactPerson = TSocialFields &
+  TNumbersFields &
+  TPersonInfo & {
+    _id?: string;
+    primary: boolean;
+    role: string;
+    birthdate: string;
+    other: TContactOtherFields;
+  };
+type TNumbersFields = {
   phone: string;
   mobile: string;
   fax: string;
   email: string;
-  role: string;
-  birthdate: string;
 };
 
 export type TContactObject = {
@@ -126,3 +165,4 @@ export type TContactEvent = {
   internalMemo: string;
   standLocation: string;
 };
+export type asElement<T> = (T & keyof JSX.IntrinsicElements) | undefined;

@@ -2,7 +2,7 @@ import classNames from "classnames";
 import type { TContact, TContactTypes, TContactPerson } from "~/lib/Helpers";
 import { fetchCountries, fetchSalutations, fetchTitles } from "~/lib/Helpers";
 import React from "react";
-import { Input, MyInput, MySubmitButton, Select } from "~/components/Form";
+import { MyInput, MySelect } from "~/components/Form";
 import { t } from "~/utils";
 import { z } from "zod";
 import { withZod } from "@remix-validated-form/with-zod";
@@ -36,7 +36,7 @@ export const BasicContactDef = z.object({
   _id: zfd.text(z.string().optional()),
   firstname: zfd.text(z.string().optional()),
   lastname: zfd.text(z.string().optional()),
-  orgname: zfd.text(z.string().optional()),
+  orgname: zfd.text(z.string().min(3)),
   address: zfd.text(z.string().optional()),
   address2: zfd.text(z.string().optional()),
   zip: zfd.text(z.string().optional()),
@@ -118,7 +118,6 @@ export default function Basics({
               name="address"
               placeholder="1234 Main St"
               className="form-control-sm"
-              defaultValue={contact.address}
             />
           </div>
         </div>
@@ -134,7 +133,6 @@ export default function Basics({
               name="address2"
               placeholder="Apt 23 | c/o | etc."
               className="form-control-sm"
-              defaultValue={contact.address2}
             />
           </div>
         </div>
@@ -150,7 +148,6 @@ export default function Basics({
               className="form-control-sm "
               name="zip"
               placeholder="78945"
-              defaultValue={contact.zip}
             />
           </div>
           <label
@@ -164,7 +161,6 @@ export default function Basics({
               className="form-control-sm"
               name="city"
               placeholder="Exampletown"
-              defaultValue={contact.city}
             />
           </div>
         </div>
@@ -176,11 +172,10 @@ export default function Basics({
             {t`Country`}:
           </label>
           <div className="col-sm-12 col-md-4">
-            <Select
+            <MySelect
               className="form-select-sm"
               name="country"
               options={fetchCountries()}
-              defaultValue={contact.country}
             />
           </div>
           <label
@@ -202,6 +197,34 @@ export default function Basics({
         </label>
         {/* <RTE label="Notes" name="notes" defaultValue="Sample content state"/> */}
       </div>
+      {/*      <div className=" css-1nmdiq5-menu" id="react-select-7-listbox">
+        <div className=" css-1n6sfyn-MenuList">
+          <div
+            className=" css-10wo9uf-option"
+            aria-disabled="false"
+            id="react-select-7-option-0"
+            tabIndex="-1"
+          >
+            Dr.
+          </div>
+          <div
+            className=" css-d7l1ni-option"
+            aria-disabled="false"
+            id="react-select-7-option-1"
+            tabIndex="-1"
+          >
+            Prof.
+          </div>
+          <div
+            className=" css-10wo9uf-option"
+            aria-disabled="false"
+            id="react-select-7-option-2"
+            tabIndex="-1"
+          >
+            Other
+          </div>
+        </div>
+      </div>*/}
     </div>
   );
 }
@@ -227,7 +250,6 @@ function ContactTypeFields({
             className="form-control-sm"
             name="orgname"
             placeholder="XYZ Ltd."
-            defaultValue={contact.orgname}
           />
         </div>
       </div>
@@ -243,12 +265,10 @@ function ContactTypeFields({
           {t`Salutation`}:
         </label>
         <div className="col-sm-12 col-md-4">
-          <Select
+          <MySelect
             className="form-select-sm"
             name="salutation"
             options={fetchSalutations()}
-            required
-            defaultValue={contact.salutation}
           />
         </div>
         <label
@@ -258,12 +278,11 @@ function ContactTypeFields({
           {t`Title`}:
         </label>
         <div className="col-sm-12 col-md-4">
-          <Select
+          <MySelect
             className="form-select-sm"
             name="title"
             options={fetchTitles()}
-            defaultValue={contact.title}
-          ></Select>
+          />
         </div>
       </div>
       <div className="row mb-2 ">
@@ -278,7 +297,6 @@ function ContactTypeFields({
             className="form-control-sm"
             name="firstname"
             placeholder="Max"
-            defaultValue={contact.firstname}
           />
         </div>
         <label
@@ -292,7 +310,6 @@ function ContactTypeFields({
             className=" form-control-sm"
             name="lastname"
             placeholder="Meier"
-            defaultValue={contact.firstname}
           />
         </div>
       </div>

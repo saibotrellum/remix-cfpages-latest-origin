@@ -7,12 +7,18 @@ import is from "@sindresorhus/is";
 import type { InputProps, SelectProps } from "~/components/FormHelpers";
 import type { TTranslatedOptions } from "~/lib/Helpers";
 import { TSelects } from "~/lib/contexts/App";
-import { useField, useFormContext } from "remix-validated-form";
+import {
+  useControlField,
+  useField,
+  useFormContext,
+} from "remix-validated-form";
 import { GetInputProps } from "remix-validated-form/browser/internal/getInputProps";
 import { useIsSubmitting } from "remix-validated-form";
 import { t } from "~/utils";
 import { Button } from "react-bootstrap";
 import type { ButtonProps } from "react-bootstrap/Button";
+import type { InputActionMeta, Props as ReactSelectProps } from "react-select";
+import ReactSelect from "react-select";
 //import {Editor} from '@tinymce/tinymce-react';
 
 /*export const Form: React.FC<FormProps> = function ({
@@ -113,6 +119,7 @@ export const MyInput = ({
   label = null,
   id,
   className,
+  defaultValue,
   ...rest
 }: MyInputProps & JSX.IntrinsicElements["input"]) => {
   id = id ? id : name;
@@ -144,29 +151,64 @@ export const MySelect = ({
   options,
   ...rest
 }: MyInputProps & {
-  options: { key: string; label: string }[];
+  options: TTranslatedOptions[];
 } & JSX.IntrinsicElements["select"]) => {
   id = id ? id : name;
   className = classNames("form-select", className);
-  const { error, getInputProps, clearError } = useField(name);
+  const { error, getInputProps, clearError, validate, defaultValue } =
+    useField(name);
+  const [value, setValue] = useControlField<string[]>(name);
+
+  const onInputChange = (
+    inputValue: string,
+    { action, prevInputValue }: InputActionMeta
+  ) => {
+    console.log(
+      "INPUTCHANGE val:",
+      inputValue,
+      "action",
+      action,
+      "prev",
+      prevInputValue
+    );
+  };
 
   const simpleInput = (
     <>
-      <select {...getInputProps({ id: id })} {...rest} className={className}>
+      <ReactSelect
+        name={name}
+        options={options}
+        onChange={() => {
+          if (error) clearError();
+        }}
+        defaultValue={options[0]}
+        defaultMenuIsOpen={true}
+        closeMenuOnSelect={false}
+        closeMenuOnScroll={false}
+      />
+      <ReactSelect
+        name={name + "2"}
+        options={options}
+        onChange={() => {
+          if (error) clearError();
+        }}
+        defaultMenuIsOpen={true}
+        closeMenuOnSelect={false}
+        closeMenuOnScroll={false}
+      />
+      {/*      <select {...getInputProps({ id: id })} {...rest} className={className}>
         {options.map(({ key, label }) => (
           <option
+            key={key}
             value={key}
             onClick={() => {
               clearError();
-            }}
-            onChange={() => {
-              if (error) clearError();
             }}
           >
             {label}
           </option>
         ))}
-      </select>
+      </select>*/}
       {error && <span className="my-error-class">{error}</span>}
     </>
   );
@@ -179,6 +221,7 @@ export const MySelect = ({
     </div>
   );
 };
+/*
 
 export const Input: React.FC<InputProps> = function ({ ...opt }) {
   // @ts-ignore
@@ -213,14 +256,15 @@ export const Select: React.FC<SelectProps> = function ({ ...opt }) {
       >
         {ret.selectOptions &&
           ret.selectOptions?.map((current) => (
-            <option key={current.key} value={current.val}>
-              {current.val}
+            <option key={current.key} value={current.label}>
+              {current.label}
             </option>
           ))}
       </select>
     </>
   );
 };
+*/
 
 export const RadioGroup = ({
   name,
