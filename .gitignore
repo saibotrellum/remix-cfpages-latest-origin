@@ -5,7 +5,7 @@ node_modules
 /functions/\[\[path\]\].js
 /functions/\[\[path\]\].js.map
 /public/build
-wrangler.toml
-.env
 .dev.vars
+.env
+wrangler.toml
 /.wrangler/
