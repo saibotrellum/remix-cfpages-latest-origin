@@ -8,4 +8,5 @@ node_modules
 .dev.vars
 .env
 wrangler.toml
+package-lock.json
 /.wrangler/
